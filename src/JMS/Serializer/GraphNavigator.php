@@ -145,6 +145,11 @@ final class GraphNavigator
                         }
                         $context->startVisiting($data);
                     }
+                    if (class_exists($type['name'], false) || interface_exists($type['name'], false)) {
+                        if (is_subclass_of($data, $type['name'], false)) {
+                            $type = array('name' => get_class($data), 'params' => array());
+                        }
+                    }
                 } elseif ($context instanceof DeserializationContext) {
                     $context->increaseDepth();
                 }
